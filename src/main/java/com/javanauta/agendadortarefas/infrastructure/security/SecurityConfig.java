@@ -27,12 +27,12 @@ public class SecurityConfig {
     private final JwtUtil jwtUtil;
 
     // Utilizado pelo Spring Security para buscar os dados do usuário.
-    private final UserDetailsService userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
 
     // Construtor para injeção de dependências de JwtUtil e UserDetailsService
     // @Autowired é uma anotação do Spring usada para fazer injeção de dependência
     @Autowired
-    public SecurityConfig(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
+    public SecurityConfig(JwtUtil jwtUtil, UserDetailsServiceImpl userDetailsService) {
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;
     }
