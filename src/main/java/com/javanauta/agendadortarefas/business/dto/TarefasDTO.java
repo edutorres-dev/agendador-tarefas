@@ -23,6 +23,7 @@ public class TarefasDTO {
     private String descricao;
 
     // Data e hora em que a tarefa foi criada.
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime dataCriacao;
 
     // Define o formato da data ao enviar ou receber o JSON.
@@ -33,6 +34,7 @@ public class TarefasDTO {
     private String emailUsuario;
 
     // Data e hora da última alteração da tarefa.
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime dataAlteracao;
 
     // Define o status atual da notificação da tarefa.
