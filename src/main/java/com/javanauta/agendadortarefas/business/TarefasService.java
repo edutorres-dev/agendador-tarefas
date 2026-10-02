@@ -76,54 +76,79 @@ public class TarefasService {
 
 
 
-    public void deleteTarefaPorId(String id){
-        try{
+    // Exclui uma tarefa pelo ID informado.
+    public void deleteTarefaPorId(String id) {
+        try {
+
+            // Remove a tarefa correspondente ao ID no banco.
             tarefasRepository.deleteById(id);
 
-        }catch ( ResourceNotFoundException e){
-            throw new ResourceNotFoundException("Erro ao deletar tarefa por id , id inexistente"
-                    +id,e.getCause());
+        } catch (ResourceNotFoundException e) {
+
+            // Lança uma exceção caso a tarefa não seja encontrada.
+            throw new ResourceNotFoundException(
+                    "Erro ao deletar tarefa por ID, ID inexistente: " + id,
+                    e.getCause()
+            );
         }
-
-
-
-
     }
 
 
-
-
-
+    // Atualiza o status de notificação de uma tarefa.
     public TarefasDTO alteraStatus(StatusNotificacaoEnum status, String id) {
         try {
-            //busca tarefa por id
-            TarefasEntity entity = tarefasRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException
-                    ("Tarefa não encontrada" + id));
+
+            // Busca a tarefa pelo ID ou lança uma exceção se não existir.
+            TarefasEntity entity = tarefasRepository.findById(id)
+                    .orElseThrow(() ->
+                            new ResourceNotFoundException("Tarefa não encontrada: " + id)
+                    );
+
+            // Atualiza o status da tarefa.
             entity.setStatusNotificacaoEnum(status);
-           return tarefaConverter.paraTarefaDTO(tarefasRepository.save(entity));
 
-        }catch (ResourceNotFoundException e){
-            throw  new ResourceNotFoundException("Erro ao alterar status da tarefa" + e.getCause());
+            // Salva a alteração e converte a Entity para DTO.
+            return tarefaConverter.paraTarefaDTO(
+                    tarefasRepository.save(entity)
+            );
+
+        } catch (ResourceNotFoundException e) {
+
+            // Informa que ocorreu um erro ao alterar o status da tarefa.
+            throw new ResourceNotFoundException(
+                    "Erro ao alterar status da tarefa: " + e.getMessage()
+            );
         }
     }
 
 
+    // Atualiza os dados de uma tarefa pelo ID.
+    public TarefasDTO updateTarefas(TarefasDTO dto, String id) {
+        try {
 
-    public TarefasDTO updateTarefas(TarefasDTO dto , String id){
+            // Busca a tarefa pelo ID ou lança uma exceção se não existir.
+            TarefasEntity entity = tarefasRepository.findById(id)
+                    .orElseThrow(() ->
+                            new ResourceNotFoundException("Tarefa não encontrada: " + id)
+                    );
 
-        try{
+            // Atualiza apenas os campos enviados no DTO.
+            tarefaUpdateConverter.updateTarefas(dto, entity);
 
-            TarefasEntity entity = tarefasRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException
-                    ("Tarefa não encontrada" + id));
-            tarefaUpdateConverter.updateTarefas(dto,entity);
-            return tarefaConverter.paraTarefaDTO(tarefasRepository.save(entity));
+            // Salva a Entity atualizada e converte para DTO.
+            return tarefaConverter.paraTarefaDTO(
+                    tarefasRepository.save(entity)
+            );
 
-        }catch (ResourceNotFoundException e){
+        } catch (ResourceNotFoundException e) {
 
-            throw  new ResourceNotFoundException("Erro ao alterar status da tarefa" + e.getCause());
+            // Informa que ocorreu um erro ao atualizar a tarefa.
+            throw new ResourceNotFoundException(
+                    "Erro ao atualizar tarefa: " + e.getMessage()
+            );
         }
-
     }
+
 
 
 

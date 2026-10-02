@@ -6,8 +6,13 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(componentModel = "spring",nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE )
+// Mapper responsável por atualizar uma Entity usando os dados do DTO.
+@Mapper(
+        componentModel = "spring",
+        nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
+)
 public interface TarefaUpdateConverter {
 
-    void updateTarefas(TarefasDTO dto , @MappingTarget TarefasEntity entity);
+    // Atualiza a Entity com os dados do DTO, ignorando campos nulos.
+    void updateTarefas(TarefasDTO dto, @MappingTarget TarefasEntity entity);
 }
