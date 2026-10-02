@@ -66,25 +66,42 @@ public class TarefasController {
     }
 
 
+
+    // Endpoint responsável por excluir uma tarefa pelo ID.
     @DeleteMapping
-    public ResponseEntity<Void> deletaTarefaPorId(@RequestParam("id") String id){
+    public ResponseEntity<Void> deletaTarefaPorId(
+            @RequestParam("id") String id) {
+
+        // Envia o ID para o Service realizar a exclusão.
         tarefasService.deleteTarefaPorId(id);
+
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping
-    public ResponseEntity<TarefasDTO> alteraStatusNotificacao(@RequestParam("status")
-                                                              StatusNotificacaoEnum status,
-                                                              @RequestParam("id") String id){
-        return ResponseEntity.ok(tarefasService.alteraStatus(status,id));
 
+    // Endpoint responsável por alterar o status da notificação.
+    @PatchMapping
+    public ResponseEntity<TarefasDTO> alteraStatusNotificacao(
+            @RequestParam("status") StatusNotificacaoEnum status,
+            @RequestParam("id") String id) {
+
+        // Envia o status e o ID para o Service realizar a alteração.
+        return ResponseEntity.ok(
+                tarefasService.alteraStatus(status, id)
+        );
     }
 
-    @PutMapping
-    public ResponseEntity<TarefasDTO> updateTarefas(@RequestBody TarefasDTO dto ,
-                                                    @RequestParam("id") String id){
-        return ResponseEntity.ok(tarefasService.updateTarefas(dto,id));
 
+    // Endpoint responsável por atualizar os dados da tarefa.
+    @PutMapping
+    public ResponseEntity<TarefasDTO> updateTarefas(
+            @RequestBody TarefasDTO dto,
+            @RequestParam("id") String id) {
+
+        // Envia o DTO e o ID para o Service atualizar a tarefa.
+        return ResponseEntity.ok(
+                tarefasService.updateTarefas(dto, id)
+        );
     }
 
 
