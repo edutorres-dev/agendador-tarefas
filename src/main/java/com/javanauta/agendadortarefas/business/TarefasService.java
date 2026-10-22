@@ -54,7 +54,8 @@ public class TarefasService {
 
         // Busca no banco e converte a lista de Entity para DTO.
         return tarefaConverter.paraListaTarefasDTO(
-                tarefasRepository.findByDataEventoBetween(dataInicial, dataFinal)
+                tarefasRepository.findByDataEventoBetweenAndStatusNotificacaoEnum
+                        (dataInicial, dataFinal, StatusNotificacaoEnum.PENDENTE)
         );
     }
 
