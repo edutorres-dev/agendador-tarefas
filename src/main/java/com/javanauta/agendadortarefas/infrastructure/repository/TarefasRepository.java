@@ -1,6 +1,7 @@
 package com.javanauta.agendadortarefas.infrastructure.repository;
 
 import com.javanauta.agendadortarefas.infrastructure.entity.TarefasEntity;
+import com.javanauta.agendadortarefas.infrastructure.enums.StatusNotificacaoEnum;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,9 +16,10 @@ public interface TarefasRepository extends MongoRepository<TarefasEntity,String>
 
 
     // Busca tarefas cujo evento está dentro do período informado.
-    List<TarefasEntity> findByDataEventoBetween(
+    List<TarefasEntity> findByDataEventoBetweenAndStatusNotificacaoEnum(
             LocalDateTime dataInicial,
-            LocalDateTime dataFinal
+            LocalDateTime dataFinal,
+            StatusNotificacaoEnum status
     );
 
     // Busca todas as tarefas vinculadas ao e-mail do usuário.
